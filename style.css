@@ -10,7 +10,7 @@
 }
 
 body {
-  background-color: #f6f7fb;
+  background-color: #cbd2ec;
   font-family: 'Muli', sans-serif;
   display: flex;
   align-items: center;
@@ -20,6 +20,14 @@ body {
   margin: 0;
 }
 
+h1 {
+    height: 50vh;
+    margin: 0;
+    display: flex;
+    position:fixed;
+    left: 80px;
+    top:20px;
+}
 .container {
   text-align: center;
 }
