@@ -1,49 +1,47 @@
-const progress = document.getElementById('progress')
-const prev = document.getElementById('prev')
-const next = document.getElementById('next')
-const circles = document.querySelectorAll('.circle')
+// Progress Steps: a reusable stepper, shown as a multi-step checkout
 
-let currentActive = 1
+const progress = document.getElementById('progress');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+const title = document.getElementById('step-title');
+const steps = document.querySelectorAll('.step');
+const panels = document.querySelectorAll('.panel');
 
-next.addEventListener('click', () => {
-    currentActive++
-
-    if(currentActive > circles.length) {
-        currentActive = circles.length
-    }
-
-    update()
-})
-
-prev.addEventListener('click', () => {
-    currentActive--
-
-    if(currentActive < 1) {
-        currentActive = 1
-    }
-
-    update()
-})
+let current = 1; // 1-based
 
 function update() {
-    circles.forEach((circle, idx) => {
-        if(idx < currentActive) {
-            circle.classList.add('active')
-        } else {
-            circle.classList.remove('active')
-        }
-    })
+  steps.forEach((step, idx) => {
+    const n = idx + 1;
+    step.classList.toggle('complete', n < current);
+    step.classList.toggle('active', n === current);
+    if (n === current) step.setAttribute('aria-current', 'step');
+    else step.removeAttribute('aria-current');
+  });
 
-    const actives = document.querySelectorAll('.active')
+  panels.forEach((panel, idx) => panel.classList.toggle('active', idx + 1 === current));
+  title.textContent = panels[current - 1].dataset.title;
 
-    progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%'
+  progress.style.width = `${((current - 1) / (steps.length - 1)) * 100}%`;
 
-    if(currentActive === 1) {
-        prev.disabled = true
-    } else if(currentActive === circles.length) {
-        next.disabled = true
-    } else {
-        prev.disabled = false
-        next.disabled = false
-    }
+  prev.disabled = current === 1;
+  next.textContent = current === steps.length ? 'Start over' : current === steps.length - 1 ? 'Review order' : 'Continue';
 }
+
+next.addEventListener('click', () => {
+  current = current === steps.length ? 1 : current + 1;
+  update();
+});
+
+prev.addEventListener('click', () => {
+  if (current > 1) current--;
+  update();
+});
+
+// Keyboard: left/right arrows move between steps
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input')) return;
+  if (e.key === 'ArrowRight' && current < steps.length) next.click();
+  if (e.key === 'ArrowLeft' && current > 1) prev.click();
+});
+
+update();

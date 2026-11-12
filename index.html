@@ -3,24 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Steps | Jun Hwang</title>
+    <meta name="description" content="A reusable progress stepper component shown as a multi-step checkout." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
-    <title>Progress Steps</title>
-    <h1>Progress Bar</h1>
   </head>
   <body>
-    <div>
-    </div>
-    <div class="container">
-      <div class="progress-container">
-        <div class="progress" id="progress"></div>
-        <div class="circle active">1</div>
-        <div class="circle">2</div>
-        <div class="circle">3</div>
-        <div class="circle">4</div>
+    <main class="card">
+      <header class="card-head">
+        <p class="eyebrow">Checkout</p>
+        <h1 id="step-title">Your cart</h1>
+      </header>
+
+      <div class="stepper">
+        <div class="track" aria-hidden="true"><div class="progress" id="progress"></div></div>
+        <ol class="steps" aria-label="Checkout progress">
+        <li class="step active" aria-current="step">
+          <span class="circle"><span class="num">1</span><span class="check" aria-hidden="true">✓</span></span>
+          <span class="label">Cart</span>
+        </li>
+        <li class="step">
+          <span class="circle"><span class="num">2</span><span class="check" aria-hidden="true">✓</span></span>
+          <span class="label">Shipping</span>
+        </li>
+        <li class="step">
+          <span class="circle"><span class="num">3</span><span class="check" aria-hidden="true">✓</span></span>
+          <span class="label">Payment</span>
+        </li>
+        <li class="step">
+          <span class="circle"><span class="num">4</span><span class="check" aria-hidden="true">✓</span></span>
+          <span class="label">Review</span>
+        </li>
+        </ol>
       </div>
-      <button class="btn" id="prev" disabled>Prev</button>
-      <button class="btn" id="next">Next</button>
-    </div> 
+
+      <div class="panels">
+        <section class="panel active" data-title="Your cart">
+          <div class="line-item">
+            <span class="thumb" style="--c: #c7d2fe"></span>
+            <div><p class="item-name">Laser Perforated Cap</p><p class="item-meta">Black · Qty 2</p></div>
+            <span class="price">$48.00</span>
+          </div>
+          <div class="line-item">
+            <span class="thumb" style="--c: #fde68a"></span>
+            <div><p class="item-name">Corduroy Dad Hat</p><p class="item-meta">Mustard · Qty 1</p></div>
+            <span class="price">$22.00</span>
+          </div>
+          <div class="total"><span>Subtotal</span><strong>$70.00</strong></div>
+        </section>
+
+        <section class="panel" data-title="Shipping details">
+          <div class="field-grid">
+            <label>Full name<input type="text" placeholder="Jane Doe" /></label>
+            <label>Email<input type="email" placeholder="jane@example.com" /></label>
+            <label class="wide">Address<input type="text" placeholder="123 Main St" /></label>
+            <label>City<input type="text" placeholder="Los Angeles" /></label>
+            <label>ZIP<input type="text" placeholder="90021" /></label>
+          </div>
+        </section>
+
+        <section class="panel" data-title="Payment method">
+          <div class="options">
+            <label class="option"><input type="radio" name="pay" checked /> <span>Credit card</span></label>
+            <label class="option"><input type="radio" name="pay" /> <span>PayPal</span></label>
+            <label class="option"><input type="radio" name="pay" /> <span>Shop Pay</span></label>
+          </div>
+          <p class="note">Demo only. No payment details are collected.</p>
+        </section>
+
+        <section class="panel" data-title="Review & place order">
+          <div class="done">
+            <span class="done-icon" aria-hidden="true">✓</span>
+            <p>Everything looks good. Your order total is <strong>$70.00</strong>.</p>
+          </div>
+        </section>
+      </div>
+
+      <footer class="actions">
+        <button class="btn ghost" id="prev" disabled>Back</button>
+        <button class="btn" id="next">Continue</button>
+      </footer>
+    </main>
+
     <script src="script.js"></script>
   </body>
-</html> 
+</html>
